@@ -1,8 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    field.cattle.io/publicEndpoints: '[{"addresses":["172.20.210.246"],"port":80,"protocol":"HTTP","serviceName":"tools:phpmyadmin","ingressName":"tools:phpmyadmin","hostname":"phpmyadmin-gameon-test-mn.pblb2c.com","path":"/","allNodes":false}]'
   labels:
     app.kubernetes.io/instance: phpmyadmin
     app.kubernetes.io/managed-by: Tiller
