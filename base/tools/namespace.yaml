@@ -1,0 +1,8 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  annotations:
+    field.cattle.io/projectId: c-4jg9c:p-wqf9q
+  name: tools
+  labels:
+    name: tools
