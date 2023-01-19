@@ -5,7 +5,6 @@ metadata:
     domainName: phpmyadmin-gameon-test-mn.pblb2c.com
   labels:
     app.kubernetes.io/instance: phpmyadmin
-    app.kubernetes.io/managed-by: Tiller
     app.kubernetes.io/name: phpmyadmin
     dns: route53
   name: phpmyadmin

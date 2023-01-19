@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   labels:
     app.kubernetes.io/instance: phpmyadmin
-    app.kubernetes.io/managed-by: Tiller
     app.kubernetes.io/name: phpmyadmin
     helm.sh/chart: phpmyadmin-1.3.0
   name: phpmyadmin
