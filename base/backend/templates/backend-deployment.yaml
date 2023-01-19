@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: backend
 spec:
   selector:
     matchLabels:
       app: guestbook
-      tier: frontend
+      tier: backend
   replicas: {{ .Values.replicas }}
   template:
     metadata:
       labels:
         app: guestbook
-        tier: frontend
+        tier: backend
     spec:
       containers:
         - name: php-redis
