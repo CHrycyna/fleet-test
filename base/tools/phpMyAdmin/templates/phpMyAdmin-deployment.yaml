@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    field.cattle.io/publicEndpoints: '[{"addresses":["172.20.210.246"],"port":80,"protocol":"HTTP","serviceName":"tools:phpmyadmin","ingressName":"tools:phpmyadmin","hostname":"phpmyadmin-gameon-test-mn.pblb2c.com","path":"/","allNodes":false}]'
+  labels:
+    app.kubernetes.io/instance: phpmyadmin
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/name: phpmyadmin
+    helm.sh/chart: phpmyadmin-1.3.0
+  name: phpmyadmin
+  namespace: tools
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: phpmyadmin
+      app.kubernetes.io/name: phpmyadmin
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        field.cattle.io/ports: '[[{"containerPort":80,"dnsName":"phpmyadmin","hostPort":0,"kind":"ClusterIP","name":"http","protocol":"TCP","sourcePort":0}]]'
+      labels:
+        app.kubernetes.io/instance: phpmyadmin
+        app.kubernetes.io/name: phpmyadmin
+    spec:
+      containers:
+        - env:
+            - name: DATABASE_HOST
+              value: mysql-gameon-test-mn.pblb2c.com
+            - name: DATABASE_PORT_NUMBER
+              value: "3306"
+            - name: PHPMYADMIN_ALLOW_NO_PASSWORD
+              value: "false"
+            - name: PMA_HOST
+              value: mysql-gameon-test-mn.pblb2c.com
+          image: phpmyadmin
+          imagePullPolicy: IfNotPresent
+          name: phpmyadmin
+          ports:
+            - containerPort: 80
+              name: http
+              protocol: TCP
+          resources:
+            limits:
+              memory: 3Gi
+            requests:
+              memory: 50Mi
+          securityContext:
+            capabilities: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
