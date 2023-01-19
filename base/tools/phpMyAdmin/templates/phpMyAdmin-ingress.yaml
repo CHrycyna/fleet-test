@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    field.cattle.io/publicEndpoints: '[{"addresses":[""],"port":80,"protocol":"HTTP","serviceName":"informatica:phpmyadmin-test","ingressName":"informatica:phpmyadmin-test","hostname":"phpmyadmin-playon-test-iics.pblb2c.com","path":"/","allNodes":false}]'
+    kubernetes.io/ingress.allow-http: "false"
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 200m
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+  labels:
+    app.kubernetes.io/instance: phpmyadmin
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/name: phpmyadmin
+    helm.sh/chart: phpmyadmin-1.3.0
+  name: phpmyadmin
+  namespace: tools
+spec:
+  rules:
+    - host: phpmyadmin-gameon-test-mn.pblb2c.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: phpmyadmin
+                port:
+                  name: http
+            path: /
+            pathType: ImplementationSpecific
